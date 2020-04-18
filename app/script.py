@@ -50,12 +50,12 @@ class Handler(FileSystemEventHandler):
 def check_files():
     for file_name in os.listdir(cfg.WATCH_DIR_PATH):
         process_file(cfg.WATCH_DIR_PATH + "/" + file_name)
-    logging.info("Checking magnet files completed.")
+    logging.info("Checking magnet files completed")
 
 
 def process_file(path):
     if str.endswith(path, cfg.FILE_EXTENSION_TO_WATCH):
-        logging.info("Magnet file created: {}.".format(path))
+        logging.info("Magnet file added: {}".format(path))
         with open(path, 'r') as file:
             content = file.read().replace('\n', '')
         successful = add_magnet(content)
@@ -77,7 +77,7 @@ def get_transmission_headers():
 
 
 if __name__ == '__main__':
-    logging.info("Starting script...")
     check_files()
+    logging.info("Starting daemon...")
     w = Watcher()
     w.run()
