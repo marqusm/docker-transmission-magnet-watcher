@@ -6,17 +6,6 @@ from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 import configuration as cfg
 
-logging.basicConfig(level=cfg.LOG_LEVEL,
-                    format='%(asctime)s %(levelname)-8s %(message)s',
-                    datefmt='%y-%m-%d %H:%M:%S.%s',
-                    filename=cfg.LOG_FILE_PATH,
-                    filemode='w')
-console = logging.StreamHandler()
-console.setLevel(logging.INFO)
-formatter = logging.Formatter('%(asctime)s %(levelname)-8s %(message)s')
-console.setFormatter(formatter)
-logging.getLogger('').addHandler(console)
-
 
 class Watcher:
     def __init__(self):
