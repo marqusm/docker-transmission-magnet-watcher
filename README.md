@@ -44,7 +44,7 @@ services:
 
 ## Versions
 
-* **18.04.20:** - Initial Release.
+* **20.04.18:** - Initial Release.
 
 ## To Do
 
