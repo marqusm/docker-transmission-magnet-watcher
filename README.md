@@ -17,7 +17,6 @@ docker run \
     -e TRANSMISSION_API="http://transmission:9091/transmission/rpc" \
     -v ~/transmission/data/watch:/watch \
     -v ~/transmission/data/completed:/completed \
-    -v ~/transmission-magnet-watch/data:/data \
     transmission-magnet-watch
 ```
 
@@ -35,7 +34,6 @@ services:
         volumes:
           - ~/transmission/data/watch:/watch
           - ~/transmission/data/completed:/completed
-          - ~/transmission-magnet-watch/data:/data
 ```
 
 ## Parameters
