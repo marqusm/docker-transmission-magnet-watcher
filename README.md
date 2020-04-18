@@ -8,18 +8,6 @@ Observe Transmission's watch folder for magnet files and add them to Transmissio
 
 Since Transmission is not supporting watching of the watch directory for magnet files, this docker container is adding that functionality.
 
-## Supported Architectures
-
-Simply pulling `marqusm/transmission-magnet-watch` should retrieve the correct image for your arch, but you can also pull specific arch images via tags.
-
-The architectures supported by this image are:
-
-| Architecture | Tag |
-| :----: | --- |
-| x86-64 | amd64-latest |
-| arm64 | arm64v8-latest |
-| armhf | arm32v7-latest |
-
 ## Usage
 
 ### Docker

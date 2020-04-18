@@ -4,21 +4,13 @@ import requests
 import time
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
+import configuration as cfg
 
-WATCH_DIR_PATH = "/watch"
-LOG_FILE = "/log/transmission-magnet-watch.log"
-
-TRANSMISSION_API = os.environ["TRANSMISSION_API"]
-
-FILE_EXTENSION_TO_WATCH = ".magnet"
-TRANSMISSION_SESSION_ID_HEADER = "X-Transmission-Session-Id"
-
-logging.basicConfig(level=logging.INFO,
+logging.basicConfig(level=cfg.LOG_LEVEL,
                     format='%(asctime)s %(levelname)-8s %(message)s',
                     datefmt='%y-%m-%d %H:%M:%S.%s',
-                    filename=LOG_FILE,
+                    filename=cfg.LOG_FILE_PATH,
                     filemode='w')
-
 console = logging.StreamHandler()
 console.setLevel(logging.INFO)
 formatter = logging.Formatter('%(asctime)s %(levelname)-8s %(message)s')
@@ -32,7 +24,7 @@ class Watcher:
 
     def run(self):
         event_handler = Handler()
-        self.observer.schedule(event_handler, WATCH_DIR_PATH, recursive=True)
+        self.observer.schedule(event_handler, cfg.WATCH_DIR_PATH, recursive=True)
         self.observer.start()
         # noinspection PyBroadException
         try:
@@ -56,13 +48,13 @@ class Handler(FileSystemEventHandler):
 
 
 def check_files():
-    for file_name in os.listdir(WATCH_DIR_PATH):
-        process_file(WATCH_DIR_PATH + "/" + file_name)
+    for file_name in os.listdir(cfg.WATCH_DIR_PATH):
+        process_file(cfg.WATCH_DIR_PATH + "/" + file_name)
     logging.info("Checking magnet files completed.")
 
 
 def process_file(path):
-    if str.endswith(path, FILE_EXTENSION_TO_WATCH):
+    if str.endswith(path, cfg.FILE_EXTENSION_TO_WATCH):
         logging.info("Magnet file created: {}.".format(path))
         with open(path, 'r') as file:
             content = file.read().replace('\n', '')
@@ -73,15 +65,15 @@ def process_file(path):
 
 def add_magnet(magnet_link):
     headers = get_transmission_headers()
-    response = requests.post(TRANSMISSION_API, headers=headers,
+    response = requests.post(cfg.TRANSMISSION_API, headers=headers,
                              json={"method": "torrent-add", "arguments": {"filename": magnet_link}})
     return response.status_code == 200
 
 
 def get_transmission_headers():
-    response = requests.post(TRANSMISSION_API, data={"method": "session-stats"})
-    session_id = response.headers[TRANSMISSION_SESSION_ID_HEADER]
-    return {TRANSMISSION_SESSION_ID_HEADER: session_id}
+    response = requests.post(cfg.TRANSMISSION_API, data={"method": "session-stats"})
+    session_id = response.headers[cfg.TRANSMISSION_SESSION_ID_HEADER]
+    return {cfg.TRANSMISSION_SESSION_ID_HEADER: session_id}
 
 
 if __name__ == '__main__':
