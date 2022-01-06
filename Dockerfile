@@ -1,6 +1,6 @@
 FROM python:3-alpine
 
-MAINTAINER Marko Miskovic <misko23@gmail.com>
+MAINTAINER Marko Mišković <misko23@gmail.com>
 
 COPY app/ /app
 
