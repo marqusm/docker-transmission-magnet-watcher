@@ -6,6 +6,8 @@ Watching Transmission's watch folder for magnet files and add them to Transmissi
 ## Description
 Since Transmission is not supporting watching of the watch directory for magnet files, this docker container is adding that functionality.
 
+Source code can be found on https://github.com/marqusm/docker-transmission-magnet-watcher.
+
 ## Usage
 
 ### Docker
@@ -43,4 +45,3 @@ services:
 - Support Transmission's username/password
 - Not running docker process as root
 - Introduce PUID, PGID and TZ environment variables
-- 
